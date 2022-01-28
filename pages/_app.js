@@ -1,5 +1,3 @@
-import { Component } from "react/cjs/react.production.min"
-
 function GlobalStyle(){
     return(
       <style global jsx>{`
@@ -29,7 +27,7 @@ function GlobalStyle(){
     )
 }  
 
-export default function MyApp({ Component, pageProps }) {
+export default function CustomApp({ Component, pageProps }) {
     return(
         <>
             <GlobalStyle/>

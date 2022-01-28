@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import appConfig from '../config.json'
 
 function Titulo(props){
-  const Tag = props.tag || h1
+  const Tag = props.tag || 'h1';
   return(
     <>
       <Tag>{props.children}</Tag>
@@ -33,6 +33,7 @@ function Titulo(props){
 */
   export default function PaginaInicial() {
     const [username, setUsername] = React.useState('ellencintra');
+    const [linkPhoto, setLinkPhoto] = React.useState(username)
     const roteamento = useRouter();
 
     return (
@@ -84,8 +85,11 @@ function Titulo(props){
                 onChange={function (event) {
                   const inputValue = event.target.value;
                   setUsername(inputValue);
+                  if (inputValue.length>1){
+                    setLinkPhoto(inputValue)
+                  }
                 }}
-                fullWidthf
+                fullWidth
                 textFieldColors={{
                   neutral: {
                     textColor: appConfig.theme.colors.neutrals[200],
@@ -131,7 +135,7 @@ function Titulo(props){
                   borderRadius: '50%',
                   marginBottom: '16px',
                 }}
-                src={`https://github.com/${username}.png`}
+                src={`https://github.com/${linkPhoto}.png`}
               />
               <Text
                 variant="body4"
@@ -142,7 +146,7 @@ function Titulo(props){
                   borderRadius: '1000px'
                 }}
               >
-                {username}
+                {linkPhoto}
               </Text>
             </Box>
             {/* Photo Area */}
