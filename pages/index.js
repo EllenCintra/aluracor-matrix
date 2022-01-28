@@ -1,4 +1,6 @@
 import { Box, Button, Text, TextField, Image } from '@skynexui/components'
+import React from 'react'
+import { useRouter } from 'next/router'
 import appConfig from '../config.json'
 
 function Titulo(props){
@@ -17,35 +19,6 @@ function Titulo(props){
   )
 }
 
-function GlobalStyle(){
-  return(
-    <style global jsx>{`
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      list-style: none;
-    }
-    body {
-      font-family: 'Open Sans', sans-serif;
-    }
-    /* App fit Height */ 
-    html, body, #__next {
-      min-height: 100vh;
-      display: flex;
-      flex: 1;
-    }
-    #__next {
-      flex: 1;
-    }
-    #__next > * {
-      flex: 1;
-    }
-    /* ./App fit Height */ 
-  `}</style>
-  )
-}
-
 /* function HomePage() {
     return (
       <div>
@@ -59,11 +32,11 @@ function GlobalStyle(){
   export default HomePage
 */
   export default function PaginaInicial() {
-    const username = 'peas';
-  
+    const [username, setUsername] = React.useState('ellencintra');
+    const roteamento = useRouter();
+
     return (
       <>
-        <GlobalStyle />
         <Box
           styleSheet={{
             display: 'flex', alignItems: 'center', justifyContent: 'center',
@@ -90,6 +63,12 @@ function GlobalStyle(){
             {/* Formulário */}
             <Box
               as="form"
+              //O comportamento padrão (default) de um formulário é recarregar a página após uma submissão, para uma outra url ou pra ela mesma
+              //Caso este comportamento padrão não seja o esperado, você pode:
+              onSubmit={function(event){
+                event.preventDefault();
+                roteamento.push('/chat');
+              }}
               styleSheet={{
                 display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
                 width: { xs: '100%', sm: '50%' }, textAlign: 'center', marginBottom: '32px',
@@ -100,8 +79,13 @@ function GlobalStyle(){
                 {appConfig.name}
               </Text>
   
-              <TextField
-                fullWidth
+            <TextField
+                value={username}
+                onChange={function (event) {
+                  const inputValue = event.target.value;
+                  setUsername(inputValue);
+                }}
+                fullWidthf
                 textFieldColors={{
                   neutral: {
                     textColor: appConfig.theme.colors.neutrals[200],
